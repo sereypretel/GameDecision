@@ -1,0 +1,58 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1.8cm]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+
+\begin{document}
+
+\begin{center}
+    {\large \textbf{UNIVERSIDAD NACIONAL DE COLOMBIA -- SEDE BOGOTÁ}} \\
+    \textbf{Matemáticas Discretas I (2025963) -- Propuesta de Proyecto Final} \\
+    \small Noviembre de 2026
+\end{center}
+
+\hrule
+\vspace{4pt}
+
+\textbf{Título del Proyecto:} \textit{Paradoja Dimensional: Juego de Supervivencia y Optimización sobre Árboles Binarios de Decisión}
+
+\textbf{Integrantes del Grupo:}
+\begin{itemize}[noitemsep, topsep=1pt]
+    \item Sebastián Eisneider Rey Pretel
+    \item \textit{[Nombre Completo Integrante 2]}
+    \item \textit{[Nombre Completo Integrante 3]}
+    \item \textit{[Nombre Completo Integrante 4]}
+\end{itemize}
+
+\textbf{1. Descripción del Problema y el Juego} \\
+Se desarrollará un videojuego web interactivo de toma de decisiones ambientado en el universo de \textit{Rick y Morty}. En cada partida, el jugador debe guiar a los personajes a través de una secuencia de eventos dimensionales para escapar de una anomalía temporal antes de que se agote la energía de la pistola de portales. En cada etapa, el jugador toma una decisión binaria que altera el vector de estado del sistema (energía restante y posesión de fluido dimensional estable) y determina la transición hacia un nuevo escenario, hasta alcanzar un estado terminal de éxito o fracaso.
+
+\textbf{2. Bloque del Curso (Eje Temático)} \\
+El eje central del proyecto es \textbf{Teoría de Grafos} (específicamente \textbf{Árboles con raíz y Árboles Binarios}), apoyado secundariamente por \textbf{Lógica Proposicional} (para formalizar las condiciones de transición y estados terminales) e \textbf{Inducción Estructural}.
+
+\textbf{3. Modelo Matemático Preliminar} \\
+El espacio de juego se define formalmente como un árbol binario con raíz $T = (V, E, r)$, donde:
+\begin{itemize}[noitemsep, topsep=1pt]
+    \item $V$ es el conjunto finito de escenarios, particionado en nodos de decisión interna $V_I$ y nodos terminales u hojas $L$ ($V = V_I \cup L$, $V_I \cap L = \emptyset$).
+    \item $r \in V_I$ es el vértice raíz que representa el estado inicial de la partida.
+    \item $E \subseteq V_I \times V$ es la relación de transición dirigida, inducida por una función de transición binaria $\delta: V_I \times \{0, 1\} \to V$ tal que cada $v \in V_I$ posee exactamente dos hijos distintos: $v_0 = \delta(v, 0)$ y $v_1 = \delta(v, 1)$.
+    \item Cada $v \in V$ tiene asociado un vector de estado $S(v) = (e_v, p_v) \in \mathbb{N} \times \{0, 1\}$ y una función de evaluación terminal $W: L \to \{0, 1\}$ que clasifica cada hoja como victoria ($1$) o derrota ($0$).
+\end{itemize}
+
+\textbf{4. Demostraciones Propuestas} \\
+Sobre el modelo definido, demostraremos formalmente:
+\begin{enumerate}[noitemsep, topsep=1pt]
+    \item \textbf{Acotamiento y Terminación (Inducción Estructural):} Para todo árbol binario de decisión $T$ de altura $h$, se cumple que $|L| \leq 2^h$ y que toda partida (camino simple desde $r$ hasta algún $l \in L$) finaliza en a lo sumo $h$ decisiones.
+    \item \textbf{Caracterización Recursiva de Estados Ganadores (Inducción sobre la altura del subárbol):} Definido el conjunto de estados ganadores $G \subseteq V$, demostraremos que $v \in G \iff (v \in L \land W(v) = 1) \lor (v \in V_I \land (\delta(v,0) \in G \lor \delta(v,1) \in G))$, fundamento del algoritmo que calcula en tiempo real cuántas rutas ganadoras sobreviven en el subárbol $T_v$.
+\end{enumerate}
+
+\textbf{5. Implementación Técnica} \\
+La aplicación está desarrollada en \textbf{TypeScript} bajo una arquitectura desacoplada (motor matemático puro independiente de la interfaz visual) y desplegada mediante integración continua en GitHub Pages (\url{https://sereypretel.github.io/GameDecision/}). El código valida los axiomas del grafo $T$, ejecuta las transiciones $\delta(u,a)$ y renderiza el árbol en tiempo real junto con el oráculo derivado del Teorema 2.
+
+\end{document}
